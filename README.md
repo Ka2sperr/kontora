@@ -16,17 +16,25 @@ Rejestracja nie wymaga i nie przechowuje numeru PESEL, numeru dokumentu ani adre
 
 - Ksiega podwojnego zapisu: stan konta jest suma wpisow w ksiedze, nie kolumna, ktora
   ktos nadpisuje. `balance_cached_minor` to wylacznie pamiec podreczna przeliczana w
-  tej samej transakcji bazodanowej.
+  tej samej transakcji bazodanowej ([ADR-001](docs/adr/001-ksiega-podwojnego-zapisu.md)).
 - Kwoty jako `BIGINT` w jednostkach minor z osobna kolumna waluty — zero arytmetyki
   zmiennoprzecinkowej na pieniadzach ([ADR-004](docs/adr/004-kwoty-jako-bigint-w-jednostkach-minor.md)).
 - Ksiega i log audytu sa tylko do dopisywania, wymuszone wyzwalaczem w Postgresie, a
-  nie dobra wola kodu aplikacji.
+  nie dobra wola kodu aplikacji. Suma zapisow kazdej transakcji, per waluta, wynosi
+  zero — pilnuje tego odroczony wyzwalacz sprawdzany przy zatwierdzeniu.
+- Kontrola wspolbieznosci z dowodem: 200 rownoleglych przelewow miedzy ta sama para
+  kont, po 100 w kazda strone. Blokady w rosnacej kolejnosci identyfikatorow, a typ
+  `LockedAccount` sprawia, ze zapomniana blokada jest bledem kompilacji
+  ([ADR-005](docs/adr/005-pessimistic-locking.md)).
+- Log audytu z lancuchem skrotow: punktowa zmiana wpisu jest wykrywalna i wskazywana
+  z numerem ([ADR-011](docs/adr/011-lancuch-skrotow-logu-audytu.md)).
 - Warstwa domenowa nie importuje ani Next.js, ani Drizzle. Granica jest egzekwowana
   przez lint i przez test architektury, ktory sam siebie sprawdza
   ([ADR-009](docs/adr/009-warstwy-i-kierunek-zaleznosci.md)).
 - Kazda operacja zmieniajaca stan wymaga klucza idempotencji; powtorzenie zwraca
   oryginalny wynik zamiast wykonywac operacje drugi raz
-  ([ADR-010](docs/adr/010-warstwa-application-jako-granica-transakcji.md)).
+  ([ADR-007](docs/adr/007-klucze-idempotencji.md),
+  [ADR-010](docs/adr/010-warstwa-application-jako-granica-transakcji.md)).
 - Wlasna implementacja uwierzytelniania — bez NextAuth i bez Clerk. Argon2id, sesje w
   ciasteczkach `httpOnly`, rotacja tokenow odswiezajacych.
 
@@ -45,7 +53,7 @@ Wymagane: Node 20+, pnpm, Docker.
 pnpm install
 cp .env.example .env        # uzupelnij DATABASE_URL, jesli zmieniasz porty
 docker compose up -d        # Postgres 17 na porcie 5432
-pnpm db:migrate             # migracje pojawiaja sie od Etapu 1
+pnpm db:migrate             # schemat, wyzwalacze i konta wewnetrzne banku
 pnpm dev                    # http://localhost:3000
 ```
 
@@ -68,7 +76,10 @@ src/infrastructure/  Drizzle, postgres.js, zegar, generator ID, adaptery zewnetr
 src/http/            Route Handlery i Server Actions
 src/app/             warstwa Next.js: routing i komponenty
 tests/architecture/  straznik granicy miedzy warstwami
+tests/domain/        testy czystej domeny, bez bazy i frameworka
 tests/properties/    testy property-based na niezmiennikach
+tests/integration/   testy wymagajace prawdziwego Postgresa
+tests/concurrency/   200 rownoleglych przelewow
 docs/adr/            decyzje architektoniczne
 ```
 
@@ -79,7 +90,7 @@ Projekt powstaje etapami; kazdy etap konczy sie osobna galezia i pull requestem.
 | Etap | Zakres | Stan |
 |------|--------|------|
 | 0 | Fundament: TS strict, granice warstw, Docker, CI, prymitywy kwot | Gotowe |
-| 1 | Ksiega: schemat, wyzwalacze append-only, niezmienniki, idempotencja, locking | Planowane |
+| 1 | Ksiega: schemat, wyzwalacze append-only, niezmienniki, idempotencja, locking | Gotowe |
 | 2 | Auth: numer klienta, Argon2id, PIN jako step-up, rotacja tokenow, audit log | Planowane |
 | 3 | Plan designu (tokeny, typografia, layout, element signature) | Planowane |
 | 4 | UI: logowanie, demo-login, dashboard, historia z filtrami | Planowane |

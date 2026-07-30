@@ -1,6 +1,11 @@
 /**
- * Barrel schematu bazy. Tabele (users, accounts, transactions, ledger_entries,
- * cards, fx_rates, audit_log) dochodza w Etapie 1 wraz z migracjami,
- * triggerami append-only i constraintami niezmiennikow ksiegi.
+ * Jedyne miejsce, z ktorego drizzle-kit czyta schemat. Nowa tabela musi trafic
+ * tutaj, inaczej nie pojawi sie w wygenerowanej migracji.
  */
-export {};
+export * from "./enums";
+export * from "./users";
+export * from "./accounts";
+export * from "./fx-rates";
+export * from "./transactions";
+export * from "./cards";
+export * from "./audit-log";

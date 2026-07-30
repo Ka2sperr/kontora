@@ -16,7 +16,10 @@ services:
       - postgres
       - -c
       - timezone=UTC
-      # Domyslne 100 nie wystarcza testowi 200 rownoleglych przelewow.
+      # Zapas na testy wspolbieznosci. Sama pula sterownika jest ograniczona do
+      # 20 polaczen, wiec dwiescie rownoleglych przelewow ustawia sie w kolejce
+      # zamiast otwierac dwiescie polaczen — ale margines pozwala uruchomic
+      # aplikacje, testy i psql naraz bez zgadywania, ktore z nich zajelo miejsca.
       - -c
       - max_connections=300
     ports:

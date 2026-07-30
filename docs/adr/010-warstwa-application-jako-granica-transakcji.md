@@ -74,9 +74,8 @@ naruszenie unikalnosci (SQLSTATE 23505) i tlumaczy je na domenowy
   bazy, milisekundy zamiast sekund.
 - Test wspolbieznosci (200 rownoleglych przelewow, Etap 1) dziala na prawdziwym
   Postgresie i jest jedynym miejscem, ktore weryfikuje kolejnosc blokad. Dlatego
-  konfiguracja integracyjna ma `fileParallelism: false`, a `docker-compose.yml`
-  podnosi `max_connections` do 300 — przy domyslnych 100 test przewrocilby sie na
-  wyczerpaniu polaczen i wygladalby na blad zakleszczenia, ktorym nie jest.
+  konfiguracja integracyjna ma `fileParallelism: false` — dwa pliki testowe
+  pracujace naraz na tej samej bazie zamienialyby wynik tego testu w loterie.
 - Application jest cienka i pozostanie cienka: otwiera transakcje, wola domene, mapuje
   bledy. Jesli zacznie zawierac regule biznesowa, regula jest w zlym miejscu.
 - Kazda operacja zmieniajaca stan przechodzi przez `UnitOfWork`, takze taka, ktora

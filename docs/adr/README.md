@@ -12,13 +12,14 @@ Historia pomylek jest tu wartoscia — pokazuje, co bylo wiadomo w momencie wybo
 
 | Nr | Tytul | Status | Etap |
 |----|-------|--------|------|
-| 001 | Ksiega podwojnego zapisu zamiast mutowalnego salda | Planowany | 1 |
+| [001](001-ksiega-podwojnego-zapisu.md) | Ksiega podwojnego zapisu zamiast mutowalnego salda | Zaakceptowany | 1 |
 | 002 | PIN jako step-up auth, nie trzeci czynnik logowania | Planowany | 2 |
 | 003 | Odrzucenie maskowanych hasel | Planowany | 2 |
 | [004](004-kwoty-jako-bigint-w-jednostkach-minor.md) | Kwoty jako BIGINT w jednostkach minor | Zaakceptowany | 0 |
-| 005 | Pessimistic locking zamiast optimistic dla ruchu pieniedzy | Planowany | 1 |
-| 006 | Konta wewnetrzne banku jako druga strona kazdego zapisu | Planowany | 1 |
-| 007 | Klucze idempotencji: zakres, TTL, obsluga kolizji | Planowany | 1 |
+| [005](005-pessimistic-locking.md) | Pessimistic locking zamiast optimistic dla ruchu pieniedzy | Zaakceptowany | 1 |
+| [006](006-konta-wewnetrzne-banku.md) | Konta wewnetrzne banku jako druga strona kazdego zapisu | Zaakceptowany | 1 |
+| [007](007-klucze-idempotencji.md) | Klucze idempotencji: zakres, TTL, obsluga kolizji | Zaakceptowany | 1 |
 | 008 | Cache i degradacja kursow NBP | Planowany | 5 |
 | [009](009-warstwy-i-kierunek-zaleznosci.md) | Warstwy i kierunek zaleznosci | Zaakceptowany | 0 |
 | [010](010-warstwa-application-jako-granica-transakcji.md) | Warstwa application jako granica transakcji | Zaakceptowany | 0 |
+| [011](011-lancuch-skrotow-logu-audytu.md) | Lancuch skrotow logu audytu | Zaakceptowany | 1 |

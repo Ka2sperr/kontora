@@ -14,6 +14,10 @@ export default defineConfig({
   schema: "./src/infrastructure/db/schema/index.ts",
   out: "./src/infrastructure/db/migrations",
   dbCredentials: { url },
+  // Ta sama konwencja co w kliencie (src/infrastructure/db/client.ts). Rozjazd
+  // miedzy generatorem migracji a runtime'em oznaczalby zapytania do kolumn,
+  // ktorych nie ma.
+  casing: "snake_case",
   // Migracje sa wersjonowane i commitowane; `push` bez migracji jest zakazany,
   // bo zabiera mozliwosc odtworzenia historii schematu.
   strict: true,

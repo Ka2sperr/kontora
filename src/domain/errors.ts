@@ -3,7 +3,21 @@
  * odpowiedz `{ error: { code, message } }`, wiec dodanie kodu tutaj jest
  * swiadoma zmiana kontraktu API, nie efektem ubocznym.
  */
-export type DomainErrorCode = "CURRENCY_MISMATCH" | "UNSUPPORTED_CURRENCY";
+export type DomainErrorCode =
+  // Kwoty i waluty
+  | "CURRENCY_MISMATCH"
+  | "UNSUPPORTED_CURRENCY"
+  // Ksiega
+  | "UNBALANCED_TRANSACTION"
+  | "EMPTY_TRANSACTION"
+  | "ACCOUNT_NOT_FOUND"
+  | "ACCOUNT_NOT_ACTIVE"
+  | "ACCOUNT_CURRENCY_MISMATCH"
+  | "INSUFFICIENT_FUNDS"
+  | "SAME_ACCOUNT_TRANSFER"
+  | "NON_POSITIVE_AMOUNT"
+  // Idempotencja
+  | "IDEMPOTENCY_CONFLICT";
 
 export class DomainError extends Error {
   readonly code: DomainErrorCode;
@@ -13,4 +27,15 @@ export class DomainError extends Error {
     this.name = "DomainError";
     this.code = code;
   }
+}
+
+export function isDomainError(
+  error: unknown,
+  code?: DomainErrorCode,
+): error is DomainError {
+  if (!(error instanceof DomainError)) {
+    return false;
+  }
+
+  return code === undefined || error.code === code;
 }
