@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Nowy push na te sama galez anuluje poprzedni przebieg — CI ma dawac odpowiedz
+# o aktualnym stanie kodu, nie kolejkowac historie.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: typecheck / lint / testy
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgres://kontora:kontora_dev@localhost:5432/kontora
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Baza z tego samego docker-compose.yml, ktorego uzywa sie lokalnie, a nie
+      # z `services:`. Kontenery uslugowe w GitHub Actions nie przyjmuja argumentow
+      # polecenia, wiec nie da sie im ustawic ani `max_connections=300`, ktore jest
+      # potrzebne testowi wspolbieznosci z Etapu 2, ani jawnej strefy czasowej.
+      # Wynikiem byloby CI o innej konfiguracji bazy niz maszyna deweloperska —
+      # czyli dokladnie ta klasa awarii, ktora najtrudniej odtworzyc.
+      - name: Postgres
+        run: docker compose up -d --wait
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Testy jednostkowe, wlasciwosci i straznik architektury
+        run: pnpm test
+
+      - name: Testy integracyjne i wspolbieznosci
+        run: pnpm test:integration
+
+      - name: Build produkcyjny
+        run: pnpm build
+
+      - name: Logi bazy przy niepowodzeniu
+        if: failure()
+        run: docker compose logs postgres

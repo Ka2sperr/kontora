@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    // ES2022 zamiast domyslnego dla create-next-app ES2017: literaly bigint (100n)
+    // wymagaja co najmniej ES2020, a wszystkie kwoty w systemie sa typu bigint.
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -13,6 +14,18 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+
     "plugins": [
       {
         "name": "next"

@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: kontora-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kontora
+      POSTGRES_PASSWORD: kontora_dev
+      POSTGRES_DB: kontora
+      # Baza dziala w UTC. Strefa uzytkownika jest wylacznie sprawa prezentacji —
+      # ksiegowanie w lokalnym czasie serwera to klasyczne zrodlo bledow na
+      # granicy zmiany czasu i na przelomie miesiaca.
+      TZ: UTC
+      PGTZ: UTC
+    command:
+      - postgres
+      - -c
+      - timezone=UTC
+      # Domyslne 100 nie wystarcza testowi 200 rownoleglych przelewow.
+      - -c
+      - max_connections=300
+    ports:
+      - "5432:5432"
+    volumes:
+      - kontora-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kontora -d kontora"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  kontora-pgdata:
