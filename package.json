@@ -16,7 +16,9 @@
     "db:migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
+    "argon2": "^0.45.1",
     "drizzle-orm": "^0.45.2",
+    "jose": "^6.2.5",
     "next": "15.5.22",
     "postgres": "^3.4.9",
     "react": "19.1.0",

@@ -13,8 +13,8 @@ Historia pomylek jest tu wartoscia — pokazuje, co bylo wiadomo w momencie wybo
 | Nr | Tytul | Status | Etap |
 |----|-------|--------|------|
 | [001](001-ksiega-podwojnego-zapisu.md) | Ksiega podwojnego zapisu zamiast mutowalnego salda | Zaakceptowany | 1 |
-| 002 | PIN jako step-up auth, nie trzeci czynnik logowania | Planowany | 2 |
-| 003 | Odrzucenie maskowanych hasel | Planowany | 2 |
+| [002](002-pin-jako-step-up-auth.md) | PIN jako step-up auth, nie trzeci czynnik logowania | Zaakceptowany | 2 |
+| [003](003-odrzucenie-maskowanych-hasel.md) | Odrzucenie maskowanych hasel | Zaakceptowany | 2 |
 | [004](004-kwoty-jako-bigint-w-jednostkach-minor.md) | Kwoty jako BIGINT w jednostkach minor | Zaakceptowany | 0 |
 | [005](005-pessimistic-locking.md) | Pessimistic locking zamiast optimistic dla ruchu pieniedzy | Zaakceptowany | 1 |
 | [006](006-konta-wewnetrzne-banku.md) | Konta wewnetrzne banku jako druga strona kazdego zapisu | Zaakceptowany | 1 |

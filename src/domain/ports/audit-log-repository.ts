@@ -1,4 +1,5 @@
 import type { AuditEntry, AuditEntryDraft } from "@/domain/audit/audit-log";
+import type { UserId } from "@/domain/ids";
 
 export interface AuditLogRepository {
   /**
@@ -13,4 +14,16 @@ export interface AuditLogRepository {
 
   /** Wpisy w kolejnosci rosnacego `seq` — jedynej, w ktorej lancuch ma sens. */
   all(): Promise<readonly AuditEntry[]>;
+
+  /**
+   * Ostatnie wpisy uzytkownika o podanych akcjach, od najnowszych. Zasila ekran
+   * historii logowan — dlatego czyta z logu audytu, a nie z osobnej tabeli:
+   * dwa rejestry tych samych zdarzen musialyby sie zgadzac, a nic by tego nie
+   * pilnowalo.
+   */
+  recentForUser(input: {
+    readonly userId: UserId;
+    readonly actions: readonly string[];
+    readonly limit: number;
+  }): Promise<readonly AuditEntry[]>;
 }

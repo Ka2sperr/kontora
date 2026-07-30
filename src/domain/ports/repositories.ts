@@ -1,5 +1,10 @@
 import type { Account, LockedAccount } from "@/domain/accounts/account";
 import type { AuditLogRepository } from "@/domain/ports/audit-log-repository";
+import type {
+  AttemptCounter,
+  RefreshTokenRepository,
+  UserRepository,
+} from "@/domain/ports/auth";
 import type { AccountId, TransactionId } from "@/domain/ids";
 import type { Currency } from "@/domain/money/currency";
 import type { Money } from "@/domain/money/money";
@@ -83,4 +88,7 @@ export interface Repositories {
   readonly transactions: TransactionRepository;
   readonly ledger: LedgerRepository;
   readonly audit: AuditLogRepository;
+  readonly users: UserRepository;
+  readonly refreshTokens: RefreshTokenRepository;
+  readonly attempts: AttemptCounter;
 }

@@ -16,6 +16,24 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
+  /**
+   * Klucz podpisujacy tokeny dostepu. Minimum 32 znaki, bo HS256 z krotkim
+   * kluczem daje podpis, ktory da sie zlamac offline — a wtedy caly mechanizm
+   * sesji jest ozdoba.
+   */
+  AUTH_SECRET: z
+    .string()
+    .min(32, "AUTH_SECRET musi miec co najmniej 32 znaki"),
+  /**
+   * Sprawdzanie hasel w bazie wyciekow. Wylaczalne, bo testy i praca bez sieci
+   * nie moga zaleznec od cudzego serwera. Domyslnie wlaczone — bezpieczne
+   * ustawienie ma byc tym, ktore dostaje sie bez czytania dokumentacji.
+   */
+  HIBP_ENABLED: z
+    .enum(["true", "false"])
+    .default("true")
+    .transform((value) => value === "true"),
+  HIBP_TIMEOUT_MS: z.coerce.number().int().positive().default(3_000),
 });
 
 export type Env = z.infer<typeof envSchema>;

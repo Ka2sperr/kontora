@@ -19,6 +19,13 @@ jobs:
     env:
       DATABASE_URL: postgres://kontora:kontora_dev@localhost:5432/kontora
       NODE_ENV: test
+      # Sekret wylacznie na czas przebiegu CI. Nie jest tajemnica i nie musi nia
+      # byc — testy podpisuja nim tokeny, ktore zyja tyle, co proces testowy.
+      AUTH_SECRET: sekret-wylacznie-dla-ci-o-dlugosci-ponad-32-znakow
+      # Bez odpytywania cudzego serwera. Test, ktory dzwoni po sieci, sprawdza
+      # dostepnosc HIBP, a nie nasz kod — i czerwienieje z powodow, na ktore nie
+      # mamy wplywu.
+      HIBP_ENABLED: "false"
 
     steps:
       - uses: actions/checkout@v4

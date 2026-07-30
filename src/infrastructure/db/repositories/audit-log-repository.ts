@@ -1,4 +1,4 @@
-import { asc, desc, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, sql } from "drizzle-orm";
 import {
   type AuditEntry,
   type AuditEntryDraft,
@@ -101,6 +101,26 @@ export class DrizzleAuditLogRepository implements AuditLogRepository {
     });
 
     return { ...withoutHash, hash };
+  }
+
+  async recentForUser(input: {
+    userId: UserId;
+    actions: readonly string[];
+    limit: number;
+  }): Promise<readonly AuditEntry[]> {
+    const rows = await this.db
+      .select()
+      .from(auditLog)
+      .where(
+        and(
+          eq(auditLog.userId, input.userId),
+          inArray(auditLog.action, [...input.actions]),
+        ),
+      )
+      .orderBy(desc(auditLog.seq))
+      .limit(input.limit);
+
+    return rows.map((row) => toEntry(row as AuditRow));
   }
 
   async all(): Promise<readonly AuditEntry[]> {

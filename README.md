@@ -36,7 +36,12 @@ Rejestracja nie wymaga i nie przechowuje numeru PESEL, numeru dokumentu ani adre
   ([ADR-007](docs/adr/007-klucze-idempotencji.md),
   [ADR-010](docs/adr/010-warstwa-application-jako-granica-transakcji.md)).
 - Wlasna implementacja uwierzytelniania — bez NextAuth i bez Clerk. Argon2id, sesje w
-  ciasteczkach `httpOnly`, rotacja tokenow odswiezajacych.
+  ciasteczkach `httpOnly`, rotacja tokenow odswiezajacych z uniewaznieniem calej
+  rodziny po wykryciu ponownego uzycia.
+- PIN nie jest trzecim haslem do logowania, tylko podniesieniem sesji na piec minut w
+  modelu PSD2 SCA ([ADR-002](docs/adr/002-pin-jako-step-up-auth.md)). Maskowane hasla
+  zostaly rozwazone i swiadomie odrzucone
+  ([ADR-003](docs/adr/003-odrzucenie-maskowanych-hasel.md)).
 
 ## Stack
 
@@ -91,7 +96,7 @@ Projekt powstaje etapami; kazdy etap konczy sie osobna galezia i pull requestem.
 |------|--------|------|
 | 0 | Fundament: TS strict, granice warstw, Docker, CI, prymitywy kwot | Gotowe |
 | 1 | Ksiega: schemat, wyzwalacze append-only, niezmienniki, idempotencja, locking | Gotowe |
-| 2 | Auth: numer klienta, Argon2id, PIN jako step-up, rotacja tokenow, audit log | Planowane |
+| 2 | Auth: numer klienta, Argon2id, PIN jako step-up, rotacja tokenow, audit log | Gotowe |
 | 3 | Plan designu (tokeny, typografia, layout, element signature) | Planowane |
 | 4 | UI: logowanie, demo-login, dashboard, historia z filtrami | Planowane |
 | 5 | Przelewy i FX: IBAN, modal PIN, kursy NBP, quote z TTL | Planowane |
