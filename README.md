@@ -23,10 +23,10 @@ Rejestracja nie wymaga i nie przechowuje numeru PESEL, numeru dokumentu ani adre
   nie dobra wola kodu aplikacji.
 - Warstwa domenowa nie importuje ani Next.js, ani Drizzle. Granica jest egzekwowana
   przez lint i przez test architektury, ktory sam siebie sprawdza
-  ([ADR-001](docs/adr/001-warstwy-i-kierunek-zaleznosci.md)).
+  ([ADR-009](docs/adr/009-warstwy-i-kierunek-zaleznosci.md)).
 - Kazda operacja zmieniajaca stan wymaga klucza idempotencji; powtorzenie zwraca
   oryginalny wynik zamiast wykonywac operacje drugi raz
-  ([ADR-009](docs/adr/009-warstwa-application-jako-granica-transakcji.md)).
+  ([ADR-010](docs/adr/010-warstwa-application-jako-granica-transakcji.md)).
 - Wlasna implementacja uwierzytelniania — bez NextAuth i bez Clerk. Argon2id, sesje w
   ciasteczkach `httpOnly`, rotacja tokenow odswiezajacych.
 
@@ -79,14 +79,14 @@ Projekt powstaje etapami; kazdy etap konczy sie osobna galezia i pull requestem.
 | Etap | Zakres | Stan |
 |------|--------|------|
 | 0 | Fundament: TS strict, granice warstw, Docker, CI, prymitywy kwot | Gotowe |
-| 1 | Schemat ksiegi, wyzwalacze append-only, niezmiennik sumy zero | Planowane |
-| 2 | Przelewy, idempotencja, testy wspolbieznosci | Planowane |
-| 3 | Uwierzytelnianie, sesje, warstwa wizualna, i18n | Planowane |
-| 4 | Wielowalutowosc, kursy NBP, przewalutowania | Planowane |
-| 5 | Karty (maskowanie, limity, blokady) | Planowane |
-| 6 | Platnosci cykliczne, harmonogram | Planowane |
-| 7 | Log audytu z lancuchem skrotow, panel administracyjny | Planowane |
-| 8 | Wdrozenie, obserwowalnosc, dokumentacja koncowa | Planowane |
+| 1 | Ksiega: schemat, wyzwalacze append-only, niezmienniki, idempotencja, locking | Planowane |
+| 2 | Auth: numer klienta, Argon2id, PIN jako step-up, rotacja tokenow, audit log | Planowane |
+| 3 | Plan designu (tokeny, typografia, layout, element signature) | Planowane |
+| 4 | UI: logowanie, demo-login, dashboard, historia z filtrami | Planowane |
+| 5 | Przelewy i FX: IBAN, modal PIN, kursy NBP, quote z TTL | Planowane |
+| 6 | Karty: Luhn na testowym BIN-ie, szyfrowanie, reveal, limity | Planowane |
+| 7 | Seeder i tryb demo: 10 miesiecy historii, analityka wydatkow | Planowane |
+| 8 | Dokumentacja i wykonczenie: threat model, OpenAPI, E2E, deploy | Planowane |
 
 Rzeczy niedokonczone sa zapisane jako zgloszenia w repozytorium, a nie jako komentarze
 `TODO` w kodzie.

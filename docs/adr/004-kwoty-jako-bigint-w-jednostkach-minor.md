@@ -68,7 +68,7 @@ interface Money {
   w `tsconfig.json` — literaly `bigint` nie kompiluja sie ponizej ES2020.
 - Arytmetyka mieszana `bigint` z `number` jest bledem TypeScriptu, wiec przypadkowe
   `amountMinor * 1.23` (na przyklad przy przeliczaniu kursu) nie skompiluje sie.
-  Przeliczenia walutowe z Etapu 4 musza wiec jawnie zdefiniowac zaokraglenie —
+  Przeliczenia walutowe z Etapu 5 musza wiec jawnie zdefiniowac zaokraglenie —
   dokladnie tam, gdzie ta decyzja powinna byc widoczna.
 - Test w `tests/domain/money.test.ts` sprawdza kwote powyzej `Number.MAX_SAFE_INTEGER`
   i asercja pokazuje, ze ten sam rachunek na `number` dalby zly wynik. Test broni

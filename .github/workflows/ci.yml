@@ -37,7 +37,7 @@ jobs:
       # Baza z tego samego docker-compose.yml, ktorego uzywa sie lokalnie, a nie
       # z `services:`. Kontenery uslugowe w GitHub Actions nie przyjmuja argumentow
       # polecenia, wiec nie da sie im ustawic ani `max_connections=300`, ktore jest
-      # potrzebne testowi wspolbieznosci z Etapu 2, ani jawnej strefy czasowej.
+      # potrzebne testowi wspolbieznosci z Etapu 1, ani jawnej strefy czasowej.
       # Wynikiem byloby CI o innej konfiguracji bazy niz maszyna deweloperska —
       # czyli dokladnie ta klasa awarii, ktora najtrudniej odtworzyc.
       - name: Postgres

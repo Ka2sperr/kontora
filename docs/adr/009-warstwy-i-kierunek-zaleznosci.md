@@ -1,4 +1,4 @@
-# ADR-001: Warstwy i kierunek zaleznosci
+# ADR-009: Warstwy i kierunek zaleznosci
 
 - **Status:** Zaakceptowany
 - **Etap:** 0

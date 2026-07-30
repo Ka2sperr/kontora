@@ -1,4 +1,4 @@
-# ADR-009: Warstwa application jako granica transakcji
+# ADR-010: Warstwa application jako granica transakcji
 
 - **Status:** Zaakceptowany
 - **Etap:** 0
@@ -72,7 +72,7 @@ naruszenie unikalnosci (SQLSTATE 23505) i tlumaczy je na domenowy
 
 - Test przelewu dziala na atrapie `UnitOfWork`, ktora po prostu wola callback. Zero
   bazy, milisekundy zamiast sekund.
-- Test wspolbieznosci (200 rownoleglych przelewow, Etap 2) dziala na prawdziwym
+- Test wspolbieznosci (200 rownoleglych przelewow, Etap 1) dziala na prawdziwym
   Postgresie i jest jedynym miejscem, ktore weryfikuje kolejnosc blokad. Dlatego
   konfiguracja integracyjna ma `fileParallelism: false`, a `docker-compose.yml`
   podnosi `max_connections` do 300 — przy domyslnych 100 test przewrocilby sie na
