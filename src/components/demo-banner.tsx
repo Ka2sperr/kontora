@@ -1,27 +1,28 @@
 /**
- * Baner wymagany przez sekcje 14 specyfikacji. Tresc jest dosłowna i nie moze byc
- * skracana ani parafrazowana.
+ * Baner wymagany przez sekcje 14. Tresc jest doslowna i nie moze byc skracana ani
+ * parafrazowana — dostaje ja z warstwy i18n, zeby wersja angielska niosla to samo
+ * ostrzezenie, a nie zadne.
  *
  * Baner jest trwaly: renderuje sie w layoucie glownym, wiec pojawia sie na kazdym
- * ekranie aplikacji i nie da sie go trwale zamknac. Uzywam elementu `role="note"`
- * zamiast `role="alert"`, bo alert wymusilby przerwanie czytnika ekranu przy kazdej
- * nawigacji — informacja jest stala, nie zdarzeniowa.
- *
- * Wyglad jest tymczasowy i celowo neutralny. Warstwa wizualna powstaje w Etapie 3,
- * po zaakceptowaniu planu designu (sekcja 10); pisanie CSS wczesniej byloby
- * przekroczeniem zakresu etapu.
+ * ekranie i nie da sie go zamknac. `role="note"` zamiast `role="alert"`, bo alert
+ * przerywalby czytnik ekranu przy kazdej nawigacji — informacja jest stala, nie
+ * zdarzeniowa.
  */
-export function DemoBanner() {
+export function DemoBanner({
+  tytul,
+  tresc,
+}: {
+  readonly tytul: string;
+  readonly tresc: string;
+}) {
   return (
     <div
       role="note"
-      aria-label="Informacja o charakterze demonstracyjnym aplikacji"
-      className="border-b border-current/20 px-4 py-2 text-sm"
+      aria-label={tytul}
+      className="border-b border-linia bg-papier-wglebienie px-4 py-2 text-sm text-atrament-slaby"
     >
-      <p>
-        <strong>Aplikacja demonstracyjna.</strong> Brak realnych pieniedzy. Brak
-        integracji z jakakolwiek instytucja finansowa. Nie wprowadzaj prawdziwych
-        danych osobowych, numerow kart ani hasel uzywanych gdziekolwiek indziej.
+      <p className="mx-auto max-w-6xl">
+        <strong className="text-stempel">{tytul}</strong> {tresc}
       </p>
     </div>
   );

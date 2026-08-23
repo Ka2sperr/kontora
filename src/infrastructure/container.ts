@@ -7,6 +7,7 @@ import { randomTokenGenerator } from "@/infrastructure/auth/random-tokens";
 import { env } from "@/infrastructure/config/env";
 import { sha256Hasher } from "@/infrastructure/crypto/sha256-hasher";
 import { db } from "@/infrastructure/db/client";
+import { DrizzleAccountQueries } from "@/infrastructure/db/queries/account-queries";
 import { DrizzleUnitOfWork } from "@/infrastructure/db/unit-of-work";
 import { cryptoIdGenerator } from "@/infrastructure/id/crypto-id-generator";
 import { systemClock } from "@/infrastructure/time/system-clock";
@@ -45,6 +46,15 @@ export const ledgerDeps: PostTransactionDeps = {
   uow: unitOfWork,
   clock: systemClock,
 };
+
+/**
+ * Zapytania odczytowe pracuja poza jednostka pracy.
+ *
+ * Odczyt do wyswietlenia nie potrzebuje transakcji: nie podejmuje decyzji o
+ * pieniadzach i nie blokuje wierszy. Opakowanie go w transakcje kosztowaloby
+ * BEGIN/COMMIT przy kazdym renderze listy kont i niczego nie chronilo.
+ */
+export const accountQueries = new DrizzleAccountQueries(db);
 
 export const auditDeps = {
   uow: unitOfWork,

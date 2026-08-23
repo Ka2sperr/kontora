@@ -1,0 +1,84 @@
+/*
+ * Tokeny designu — jedyne miejsce z wartosciami kolorow, krojow i odstepow.
+ *
+ * Zaden komponent nie zna heksa. Zmiana kierunku wizualnego to zmiana tego pliku,
+ * a nie przeszukiwanie repozytorium za `#23478E`.
+ *
+ * Nazwy sa polskie i rzeczowe: `--kolor-stempel` mowi o intencji, `--red-600` o
+ * pozycji w cudzej palecie.
+ */
+
+:root {
+  /* Kolory — kierunek "papier i tusz" (docs/design/plan.md) */
+  --kolor-papier: #faf7f2;
+  --kolor-papier-wglebienie: #f2ede4;
+  --kolor-atrament: #1b1b1f;
+  --kolor-atrament-slaby: #5c5850;
+  --kolor-linia: #ded7cb;
+  --kolor-atrament-niebieski: #23478e;
+  --kolor-stempel: #a4362b;
+  --kolor-zielen-ksiegi: #2f5d50;
+
+  /* Kroje. Zmienne z next/font sa podstawiane w layout.tsx. */
+  --kroj-naglowek: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --kroj-tekst: var(--font-plex-sans), "Segoe UI", system-ui, sans-serif;
+
+  /* Skala odstepow. Jedna, oparta o 4 px — bez wartosci spoza listy. */
+  --odstep-1: 0.25rem;
+  --odstep-2: 0.5rem;
+  --odstep-3: 0.75rem;
+  --odstep-4: 1rem;
+  --odstep-6: 1.5rem;
+  --odstep-8: 2rem;
+  --odstep-12: 3rem;
+  --odstep-16: 4rem;
+
+  /*
+   * Promien 2 px, nie 8. Ksiega rachunkowa nie ma zaokraglonych rogow, a 8 px to
+   * domyslny promien kazdego dashboardu wygenerowanego w ostatnich latach.
+   */
+  --promien: 2px;
+
+  --szerokosc-szyny: 15rem;
+  --szerokosc-kolumny-kwoty: 9rem;
+}
+
+/*
+ * Tryb ciemny to osobna tozsamosc ("nocna zmiana"), nie odwrocenie jasnego.
+ * Papier nie udaje bieli w nocy, a tusz nie zmienia sie w neon.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --kolor-papier: #16161a;
+    --kolor-papier-wglebienie: #1e1e23;
+    --kolor-atrament: #ede7dd;
+    --kolor-atrament-slaby: #a8a196;
+    --kolor-linia: #2e2c29;
+    --kolor-atrament-niebieski: #7fa0e0;
+    --kolor-stempel: #e08578;
+    --kolor-zielen-ksiegi: #7fb3a0;
+  }
+}
+
+/* Wybor uzytkownika wygrywa z ustawieniem systemu w obie strony. */
+:root[data-motyw="jasny"] {
+  --kolor-papier: #faf7f2;
+  --kolor-papier-wglebienie: #f2ede4;
+  --kolor-atrament: #1b1b1f;
+  --kolor-atrament-slaby: #5c5850;
+  --kolor-linia: #ded7cb;
+  --kolor-atrament-niebieski: #23478e;
+  --kolor-stempel: #a4362b;
+  --kolor-zielen-ksiegi: #2f5d50;
+}
+
+:root[data-motyw="ciemny"] {
+  --kolor-papier: #16161a;
+  --kolor-papier-wglebienie: #1e1e23;
+  --kolor-atrament: #ede7dd;
+  --kolor-atrament-slaby: #a8a196;
+  --kolor-linia: #2e2c29;
+  --kolor-atrament-niebieski: #7fa0e0;
+  --kolor-stempel: #e08578;
+  --kolor-zielen-ksiegi: #7fb3a0;
+}

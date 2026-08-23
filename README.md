@@ -85,6 +85,8 @@ tests/domain/        testy czystej domeny, bez bazy i frameworka
 tests/properties/    testy property-based na niezmiennikach
 tests/integration/   testy wymagajace prawdziwego Postgresa
 tests/concurrency/   200 rownoleglych przelewow
+src/i18n/            slowniki PL/EN i formatowanie kwot przez Intl
+docs/design/         plan kierunku wizualnego
 docs/adr/            decyzje architektoniczne
 ```
 
@@ -97,8 +99,8 @@ Projekt powstaje etapami; kazdy etap konczy sie osobna galezia i pull requestem.
 | 0 | Fundament: TS strict, granice warstw, Docker, CI, prymitywy kwot | Gotowe |
 | 1 | Ksiega: schemat, wyzwalacze append-only, niezmienniki, idempotencja, locking | Gotowe |
 | 2 | Auth: numer klienta, Argon2id, PIN jako step-up, rotacja tokenow, audit log | Gotowe |
-| 3 | Plan designu (tokeny, typografia, layout, element signature) | Planowane |
-| 4 | UI: logowanie, demo-login, dashboard, historia z filtrami | Planowane |
+| 3 | Plan designu (tokeny, typografia, layout, element signature) | Gotowe |
+| 4 | UI: logowanie, demo-login, dashboard, historia z zapisami ksiegowymi | Gotowe |
 | 5 | Przelewy i FX: IBAN, modal PIN, kursy NBP, quote z TTL | Planowane |
 | 6 | Karty: Luhn na testowym BIN-ie, szyfrowanie, reveal, limity | Planowane |
 | 7 | Seeder i tryb demo: 10 miesiecy historii, analityka wydatkow | Planowane |

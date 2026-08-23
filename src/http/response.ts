@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { DomainError } from "@/domain/errors";
 import { toErrorBody } from "@/http/errors";
+import { ValidationError } from "@/http/validation";
 
 /**
  * Koperta odpowiedzi z sekcji 7: `{ data }` albo `{ error: { code, message } }`.
@@ -59,6 +61,14 @@ export async function handle(
 
     return response;
   } catch (error) {
+    // Blad domenowy i blad walidacji sa czescia kontraktu API — brak srodkow na
+    // koncie nie jest awaria i nie ma zasmiecac logow. Wszystko inne to defekt,
+    // ktory MUSI zostawic slad: odpowiedz dla klienta jest celowo ogolna, wiec
+    // bez tego wpisu nie ma nigdzie informacji, co sie faktycznie stalo.
+    if (!(error instanceof DomainError) && !(error instanceof ValidationError)) {
+      console.error(`[${requestId}] nieobsluzony blad zadania`, error);
+    }
+
     const response = failure(error);
 
     response.headers.set("X-Request-Id", requestId);

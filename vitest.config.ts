@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   test: {
     environment: "node",
-    include: ["tests/{architecture,domain,properties}/**/*.test.ts"],
+    include: ["tests/{architecture,domain,properties,presentation}/**/*.test.ts"],
     reporters: ["default"],
   },
 });

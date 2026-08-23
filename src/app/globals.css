@@ -1,24 +1,70 @@
 @import "tailwindcss";
+@import "./tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Most miedzy tokenami a Tailwindem. Klasa `text-atrament` dziala, bo ta sekcja
+ * przepisuje zmienne na przestrzen nazw, ktora Tailwind rozumie.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
+  --color-papier: var(--kolor-papier);
+  --color-papier-wglebienie: var(--kolor-papier-wglebienie);
+  --color-atrament: var(--kolor-atrament);
+  --color-atrament-slaby: var(--kolor-atrament-slaby);
+  --color-linia: var(--kolor-linia);
+  --color-niebieski: var(--kolor-atrament-niebieski);
+  --color-stempel: var(--kolor-stempel);
+  --color-zielen: var(--kolor-zielen-ksiegi);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-naglowek: var(--kroj-naglowek);
+  --font-tekst: var(--kroj-tekst);
+
+  --radius-ostry: var(--promien);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--kolor-papier);
+  color: var(--kolor-atrament);
+  font-family: var(--kroj-tekst);
+  /* Cyfry o stalej szerokosci w calej aplikacji. W widoku finansowym kolumna
+     kwot, ktora sie nie wyrownuje, jest pierwsza rzecza, ktora widac. */
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--kroj-naglowek);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/*
+ * Widoczny pierscien focusu. `:focus-visible`, nie `:focus` — mysz nie ma dostac
+ * obwodki po kliknieciu, klawiatura ma ja dostac zawsze.
+ */
+:focus-visible {
+  outline: 2px solid var(--kolor-atrament-niebieski);
+  outline-offset: 2px;
+}
+
+/*
+ * Respektowanie `prefers-reduced-motion` nie jest opcja. Dla czesci osob ruch na
+ * ekranie to zawroty glowy, a nie ozdoba.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Kwoty i kolumny liczbowe. Klasa jest jawna, zeby dalo sie ja znalezc. */
+.kwota {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
 }
